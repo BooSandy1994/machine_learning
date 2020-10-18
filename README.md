@@ -6,3 +6,8 @@ Project info :
 
 
 Iris : test accuracy achieved :  1.0 Random Forest, 0.9 Naive Bayes, 1.0 Deep Neural Net
+
+
+Heart_disease : test accuracy achieved : 0.885 Random Forest, 0.85 Deep Neural Net
+
+
