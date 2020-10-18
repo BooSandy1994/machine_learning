@@ -1,6 +1,8 @@
 # machine_learning
 A series of machine learning projects. All of these are personal projects. The main languages which are used are R and Python. Various techniques have been used like feature engineering, feature identification etc. Statistical analysis has been used using R. The machine learning algorithms have been deployed using Python.
 
+NOTE : All Feature enginnering has been done in R please check the R files for the same.
+
 
 Project info :
 
