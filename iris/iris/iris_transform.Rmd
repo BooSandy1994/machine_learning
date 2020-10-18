@@ -1,0 +1,85 @@
+---
+title: "iris_transformation"
+author: "Sandipan Majhi"
+date: "16/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Transformation of the sepal length to the variable `sl`. Here, we try to even out the number of the instances of the sepal length variations.
+
+```{r}
+data <- data %>% mutate(sl = if_else(SepalLengthCm<= 5.37, "low", if_else(SepalLengthCm <= 6.2,"mid", "high")))
+
+ggplot(data = data, aes(x = sl)) + geom_histogram(stat = 'count')
+
+data %>% group_by(sl,Species) %>% summarise(count = n())
+```
+
+Here we get the plot of the histogram of the `sl` variable.We see that some values of the cells >= 5. So the chi sq test cannot be done. So we transform a binary value of the sepal length. We will still use the data of `sl` because we can see clear boundaries in the data.
+
+Now we do a different transformation of the data from sepal length.
+
+```{r}
+data<-data%>% mutate(sl_bin = if_else(SepalLengthCm<=5.7,"low","high"))
+
+data %>% group_by(sl_bin, Species) %>% summarise(count = n())
+
+ggplot(data = data,aes(x = sl_bin)) + geom_histogram(stat = 'count')
+```
+
+
+Check the chi-sq test of goodness of fit.
+```{r}
+inference(y = sl_bin, x = Species,data = data, type = "ht",statistic = "proportion", method = "theoretical")
+```
+
+We find that Species is very much dependent on the sepal length's binary transformation.
+
+Now we transform the sepal width. We store the new transformation in `sw`.
+
+```{r}
+data <- data %>% mutate(sw = if_else(SepalWidthCm<=2.85,"low", if_else(SepalWidthCm<=3.1, "mid", "high")))
+
+ggplot(data = data, aes(x = sw)) + geom_histogram(stat = 'count')
+```
+
+Now we do chi square test.
+```{r}
+inference(y = Species, x = sw,data = data, type = "ht",statistic = "proportion", method = "theoretical")
+```
+
+Better transformation of the sepal width, which provides better usable idea of the separation of the classes.
+
+```{r}
+data <- data %>% mutate(sw_bin = if_else(SepalWidthCm<=3,"low","high"))
+
+inference(y = sw_bin, x = Species,data = data, type = "ht",statistic = "proportion", method = "theoretical", alternative = "greater", success = "high")
+```
+
+We see that the binary_test of sepal width is dependent on the species of the flower.
+
+Now we check the petal length values. Now we create two different variables as `pl` and `pl_bin` which give us an idea of the petal length value inferences.
+```{r}
+data <- data %>% mutate(pl = if_else(PetalLengthCm<=1.5,"low",if_else(PetalLengthCm<4,"mid",if_else(PetalLengthCm<5,"high", "too_high"))))
+
+data %>% group_by(pl, Species) %>% summarise(count = n())
+```
+We cannot make any useful chi square test here as many cell values are zero in the contingency table. For confirmed chi-sq test we create the column `pl_bin`. The petal length values are very skewed and very much segregated.Hypothesis tests cannot be done for all of the data.
+
+```{r}
+data <- data %>% mutate(pl_bin = if_else(PetalLengthCm <= 3.5,"low", "high"))
+```
+
+We will be performing double tests through the data transformations so that the classifier does not become biased in the attempt of classification.
+
+Now Petal width.
+We modify the  variable `pw` as a new variable.
+
+```{r}
+data <- data %>% mutate(pw = if_else(PetalWidthCm <= 1.2, "low", if_else(PetalWidthCm <= 1.9,"mid","high")))
+```
+
