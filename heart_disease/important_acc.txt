@@ -1,0 +1,5 @@
+sex, is_cp, c_age, slope, ca, c_oldpeak,c_thal, c_chol,c_hr,exang, c_ecg
+sex,is_cp,c_age,slope,ca,c_oldpeak, c_thal, 
+
+https://archive.ics.uci.edu/ml/datasets/Heart+Disease
+https://www.kaggle.com/ronitf/heart-disease-uci
