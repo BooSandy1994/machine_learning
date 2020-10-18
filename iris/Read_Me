@@ -1,0 +1,1 @@
+Here is the prediction of the Iris dataset. The test accuracy achieved was 1.0 using random forest classifier, Naive Bayes accuracy was 0.9 and for deep neural network the test accuracy achieved was 1.0. 
